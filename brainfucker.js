@@ -1,3 +1,7 @@
+key = 0;
+document.onkeydown = function(e) {key = e.keyCode};
+document.onkeyup = function() {key = 0}
+
 var Brainfuck = function(Input, Output) {
 	this.Input = Input,
 	this.Output = Output,
@@ -11,7 +15,9 @@ var Brainfuck = function(Input, Output) {
 			this.track[j] = 0;
 		}
 		while (this.step < BrainfuckCode.length) {
+
 			this.currentCharacter = String.fromCharCode(this.track[this.index]);
+			
 			switch (BrainfuckCode[this.step]) {
 				case '>': this.index ++; this.step ++;
 					break;
@@ -29,9 +35,13 @@ var Brainfuck = function(Input, Output) {
 					break;
 				case '-': this.track[this.index] --; this.step ++;
 					break;
-				case '.': this.Output this.step ++;
+				case '.': document.write(this.currentCharacter); this.step ++;
+					break;
+				case ',': if(key !== 0) {this.track[this.index] = key; this.step ++}
 					break;
 			}
 		}
 	}
 }
+var bf = new Brainfuck();
+bf.play('++++,.');
